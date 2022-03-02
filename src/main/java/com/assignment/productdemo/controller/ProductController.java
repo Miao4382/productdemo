@@ -5,6 +5,7 @@ import com.assignment.productdemo.dto.ProductDTO;
 import com.assignment.productdemo.exception.ProductNotFoundException;
 import com.assignment.productdemo.response.OkResponse;
 import com.assignment.productdemo.service.ProductService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @GetMapping
+    @ApiOperation(value = "Get details of a product by id")
     public ResponseEntity<ProductDTO> getProductById(@RequestParam("id") long productId) {
         ProductDTO product = productService.getProductById(productId);
         if (product == null) {
@@ -40,12 +39,14 @@ public class ProductController {
     }
 
     @GetMapping(value = "/all")
+    @ApiOperation(value = "Get all products")
     public ResponseEntity<List<ProductDTO>> getAllProduct() {
         log.info("Get all product API invoked");
         return ResponseEntity.status(HttpStatus.OK).body(productService.getAllProduct());
     }
 
     @PostMapping
+    @ApiOperation(value = "Add a product")
     public ResponseEntity<ProductDTO> createProduct(@Validated @RequestBody ProductDTO product) {
         ProductDTO createdProduct = productService.createProduct(product);
         log.info("Create product API invoked for product: " + createdProduct);
@@ -53,6 +54,7 @@ public class ProductController {
     }
 
     @PutMapping
+    @ApiOperation(value = "Update the product information")
     public ResponseEntity<ProductDTO> updateProduct(@Validated @RequestBody ProductDTO product) {
         if (product.getId() == null) {
             log.error("Update product failed: product id is null");
@@ -70,6 +72,7 @@ public class ProductController {
     }
 
     @DeleteMapping
+    @ApiOperation(value = "Delete a product by id")
     public ResponseEntity<OkResponse> deleteProduct(@RequestParam("id") long productId) {
         ProductDTO deletedProduct = productService.deleteProductById(productId);
         if (deletedProduct == null) {
