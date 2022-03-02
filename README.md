@@ -1,0 +1,11 @@
+# Product Demo
+- A basic Spring Boot REST APi project demonstrates CRUD operation on `product`.
+  - Get product by id
+  - Get all products
+  - Create a new product
+  - Update existing product
+  - Delete product
+- The backend is connected to a Postgresql database. Product data is stored in this database.
+- The APIs are documented using Swagger UI.
+- Folder `postman collection` contains my API tests using postman.
+- Folder `sql` contains the sql file to set up the database.
